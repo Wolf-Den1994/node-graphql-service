@@ -2,11 +2,23 @@ export interface IID {
   _id: string
 }
 
-export interface INewUser {
+export interface IConfig {
+  config: {
+    headers: {
+      Authorization: string
+    }
+  }
+}
+
+export interface IRegistrationData {
   firstName: string
   lastName: string
   password: string
   email: string
+}
+
+export interface INewUser {
+  content: IRegistrationData
 }
 
 export interface IUserLogin {
@@ -20,10 +32,10 @@ export interface IArtistPost {
   country: string
 }
 
-export interface IConfig {
-  config: {
-    headers: {
-      Authorization: string
-    }
-  }
+export interface IArtistID {
+  id: string
+}
+
+export interface IArtistPut extends IArtistID {
+  content: IArtistPost
 }

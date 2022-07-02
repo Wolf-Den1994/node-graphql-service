@@ -18,9 +18,9 @@ export const resolver = {
     },
   },
   Mutation: {
-    register: async (_: any, body: INewUser) => {
+    register: async (_: any, { content }: INewUser) => {
       try {
-        const { data } = await axios.post(`${usersUrl}/register`, body);
+        const { data } = await axios.post(`${usersUrl}/register`, content);
         return data;
       } catch (error: any) {
         return error;
