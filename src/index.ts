@@ -14,6 +14,13 @@ const server = new ApolloServer({
   resolvers,
   csrfPrevention: true,
   cache: 'bounded',
+  context: ({ req }) => ({
+    config: {
+      headers: {
+        Authorization: req.headers.authorization,
+      },
+    },
+  }),
 });
 
 server.listen().then(({ url }) => {

@@ -11,6 +11,10 @@ type Artist {
 }
 
 type Query {
-    artists: [Artist],
+    artists: [Artist]
     artist(_id: ID!): Artist
+}
+
+type Mutation {
+    create(firstName: String!, secondName: String!, country: String!, year: Int): Artist
 }
