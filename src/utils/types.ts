@@ -2,6 +2,10 @@ export interface IID {
   _id: string
 }
 
+export interface IIDDefault {
+  id: string
+}
+
 export interface IConfig {
   config: {
     headers: {
@@ -54,4 +58,40 @@ export interface IAlbumDataPost {
 
 export interface IAlbumDataPut extends IDataID {
   content: IAlbumData
+}
+
+export interface IBandData {
+  name: string
+}
+
+export interface IBandDataPost {
+  content: IBandData
+}
+
+export interface IBandDataPut extends IDataID {
+  content: IBandData
+}
+
+export interface IGenreData {
+  name: string
+}
+
+export interface IGenreDataPost {
+  content: IGenreData
+}
+
+export interface IGenreDataPut extends IDataID {
+  content: IGenreData
+}
+
+export interface ITrackData {
+  name: string
+}
+
+export interface ITrackDataPost {
+  content: ITrackData
+}
+
+export interface ITrackDataPut extends IDataID {
+  content: ITrackData
 }

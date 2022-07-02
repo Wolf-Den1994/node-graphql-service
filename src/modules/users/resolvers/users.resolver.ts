@@ -8,7 +8,7 @@ export const resolver = {
       const { data } = await axios.get(`${usersUrl}/${_id}`);
       return data;
     },
-    login: async (_: any, body: IUserLogin) => {
+    jwt: async (_: any, body: IUserLogin) => {
       try {
         const { data } = await axios.post(`${usersUrl}/login`, body);
         return data;
