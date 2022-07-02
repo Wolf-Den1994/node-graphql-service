@@ -26,16 +26,32 @@ export interface IUserLogin {
   email: string
 }
 
-export interface IArtistPost {
+export interface IDataID {
+  id: string
+}
+
+export interface IArtistData {
   firstName: string
   secondName: string
   country: string
 }
 
-export interface IArtistID {
-  id: string
+export interface IArtistDataPost {
+  content: IArtistData
 }
 
-export interface IArtistPut extends IArtistID {
-  content: IArtistPost
+export interface IArtistDataPut extends IDataID {
+  content: IArtistData
+}
+
+export interface IAlbumData {
+  name: string
+}
+
+export interface IAlbumDataPost {
+  content: IAlbumData
+}
+
+export interface IAlbumDataPut extends IDataID {
+  content: IAlbumData
 }

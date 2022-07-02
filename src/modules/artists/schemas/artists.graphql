@@ -17,7 +17,7 @@ type Artists {
     items: [Artist!]
 }
 
-type DeleteType {
+type ArtistDelete {
     acknowledged: Boolean
     deletedCount: Int
 }
@@ -29,7 +29,8 @@ input ArtistInput {
     birthDate: String
     birthPlace: String
     country: String!
-    instruments: String
+    bandsIds: [String]
+    instruments: [String]
 }
 
 type Query {
@@ -38,7 +39,7 @@ type Query {
 }
 
 type Mutation {
-    create(firstName: String!, secondName: String!, country: String!, year: Int): Artist
-    update(id: ID!, content: ArtistInput): Artist
-    delete(id: ID!): DeleteType
+    createArtist(content: ArtistInput): Artist
+    updateArtist(id: ID!, content: ArtistInput): Artist
+    deleteArtist(id: ID!): ArtistDelete
 }
