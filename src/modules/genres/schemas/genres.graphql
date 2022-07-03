@@ -7,9 +7,9 @@ type Genre {
 }
 
 type Genres {
-    offset: Int
-    limit: Int
-    total: Int
+    offset: Int!
+    limit: Int!
+    total: Int!
     items: [Genre!]
 }
 
@@ -18,7 +18,14 @@ type GenreDelete {
     deletedCount: Int
 }
 
-input GenreInput {
+input GenreInputPost {
+    name: String!
+    description: String
+    country: String
+    year: Int
+}
+
+input GenreInputPut {
     name: String!
     description: String
     country: String
@@ -26,12 +33,12 @@ input GenreInput {
 }
 
 type Query {
-    genres: Genres
+    genres(limit: Int, offset: Int, filter: String): Genres
     genre(id: ID!): Genre
 }
 
 type Mutation {
-    createGenre(content: GenreInput): Genre
-    updateGenre(id: ID!, content: GenreInput): Genre
+    createGenre(content: GenreInputPost): Genre
+    updateGenre(id: ID!, content: GenreInputPut): Genre
     deleteGenre(id: ID!): GenreDelete
 }

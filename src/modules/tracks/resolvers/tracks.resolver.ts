@@ -3,12 +3,12 @@ import {
   IIDDefault, ITrackDataPost, IConfig, ITrackDataPut, IDataID,
 } from '../../../utils/types';
 import { tracksUrl } from '../../../utils/constants';
-import { transformData } from '../../../utils/common';
+import { transformData, errorHandler } from '../../../utils/common';
 
 export const resolver = {
   Query: {
-    tracks: async () => {
-      const { data } = await axios.get(tracksUrl);
+    tracks: async (_: any, { limit = 5, offset = 0, filter = '' }) => {
+      const { data } = await axios.get(tracksUrl, { params: { limit, offset, filter } });
       const newData = transformData(data);
       return newData;
     },
@@ -25,7 +25,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error: any) {
-        return error;
+        throw errorHandler(error);
       }
     },
     updateTrack: async (_: any, { id, ...body }: ITrackDataPut, context: IConfig) => {
@@ -34,7 +34,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error) {
-        return error;
+        throw errorHandler(error);
       }
     },
     deleteTrack: async (_: any, { id }: IDataID, context: IConfig) => {
@@ -43,7 +43,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error) {
-        return error;
+        throw errorHandler(error);
       }
     },
   },

@@ -14,9 +14,9 @@ type Member {
 }
 
 type Bands {
-    offset: Int
-    limit: Int
-    total: Int
+    offset: Int!
+    limit: Int!
+    total: Int!
     items: [Band!]
 }
 
@@ -25,12 +25,20 @@ type BandDelete {
     deletedCount: Int
 }
 
-input BandInput {
+input BandInputPost {
     name: String!
     origin: String
     website: String
-    members: [MemberInpit]
-    genres: [ID]
+    members: [MemberInpit!]
+    genres: [ID!]
+}
+
+input BandInputPut {
+    name: String!
+    origin: String
+    website: String
+    members: [MemberInpit!]
+    genres: [ID!]
 }
 
 input MemberInpit {
@@ -40,12 +48,12 @@ input MemberInpit {
 }
 
 type Query {
-    bands: Bands
+    bands(limit: Int, offset: Int, filter: String): Bands
     band(id: ID!): Band
 }
 
 type Mutation {
-    createBand(content: BandInput): Band
-    updateBand(id: ID!, content: BandInput): Band
+    createBand(content: BandInputPost): Band
+    updateBand(id: ID!, content: BandInputPut): Band
     deleteBand(id: ID!): BandDelete
 }

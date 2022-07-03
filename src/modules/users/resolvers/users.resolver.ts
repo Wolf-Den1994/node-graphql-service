@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { IIDDefault, INewUser, IUserLogin } from '../../../utils/types';
 import { usersUrl } from '../../../utils/constants';
-import { transformData } from '../../../utils/common';
+import { transformData, errorHandler } from '../../../utils/common';
 
 export const resolver = {
   Query: {
@@ -16,7 +16,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error) {
-        return error;
+        throw errorHandler(error);
       }
     },
   },
@@ -27,7 +27,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error: any) {
-        return error;
+        throw errorHandler(error);
       }
     },
   },

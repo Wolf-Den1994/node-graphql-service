@@ -10,9 +10,9 @@ type Album {
 }
 
 type Albums {
-    offset: Int
-    limit: Int
-    total: Int
+    offset: Int!
+    limit: Int!
+    total: Int!
     items: [Album!]
 }
 
@@ -21,23 +21,33 @@ type AlbumDelete {
     deletedCount: Int
 }
 
-input AlbumInput {
+input AlbumInputPost {
     name: String!
     released: Int
-    artistsIds: [String]
-    bandsIds: [String]
-    trackIds: [String]
-    genresIds: [String]
+    artists: [ID!]
+    bands: [ID!]
+    tracks: [ID!]
+    genres: [ID!]
+    image: String
+}
+
+input AlbumInputPut {
+    name: String
+    released: Int
+    artists: [ID!]
+    bands: [ID!]
+    tracks: [ID!]
+    genres: [ID!]
     image: String
 }
 
 type Query {
-    albums: Albums
+    albums(limit: Int, offset: Int, filter: String): Albums
     album(id: ID!): Album
 }
 
 type Mutation {
-    createAlbum(content: AlbumInput): Album
-    updateAlbum(id: ID!, content: AlbumInput): Album
+    createAlbum(content: AlbumInputPost): Album
+    updateAlbum(id: ID!, content: AlbumInputPut): Album
     deleteAlbum(id: ID!): AlbumDelete
 }

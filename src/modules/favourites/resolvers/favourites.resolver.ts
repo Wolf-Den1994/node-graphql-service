@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { IIDDefault, IConfig } from '../../../utils/types';
 import { favouritesUrl } from '../../../utils/constants';
-import { transformData } from '../../../utils/common';
+import { transformData, errorHandler } from '../../../utils/common';
 
 export const resolver = {
   Query: {
@@ -19,7 +19,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error: any) {
-        return error;
+        throw errorHandler(error);
       }
     },
     addBandToFavourites: async (_: any, { id }: IIDDefault, context: IConfig) => {
@@ -29,7 +29,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error: any) {
-        return error;
+        throw errorHandler(error);
       }
     },
     addArtistToFavourites: async (_: any, { id }: IIDDefault, context: IConfig) => {
@@ -39,7 +39,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error: any) {
-        return error;
+        throw errorHandler(error);
       }
     },
     addGenreToFavourites: async (_: any, { id }: IIDDefault, context: IConfig) => {
@@ -49,7 +49,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error: any) {
-        return error;
+        throw errorHandler(error);
       }
     },
   },

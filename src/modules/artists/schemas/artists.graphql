@@ -7,13 +7,13 @@ type Artist {
     birthPlace: String
     country: String
     bands: [Band]
-    instruments: String
+    instruments: [String]
 }
 
 type Artists {
-    offset: Int
-    limit: Int
-    total: Int
+    offset: Int!
+    limit: Int!
+    total: Int!
     items: [Artist!]
 }
 
@@ -22,24 +22,35 @@ type ArtistDelete {
     deletedCount: Int
 }
 
-input ArtistInput {
+input ArtistInputPost {
     firstName: String!
     secondName: String!
     middleName: String
     birthDate: String
     birthPlace: String
     country: String!
-    bands: [ID]
+    bands: [ID!]
+    instruments: [String]
+}
+
+input ArtistInputPut {
+    firstName: String
+    secondName: String
+    middleName: String
+    birthDate: String
+    birthPlace: String
+    country: String
+    bands: [ID!]
     instruments: [String]
 }
 
 type Query {
-    artists: Artists
+    artists(limit: Int, offset: Int, filter: String): Artists
     artist(id: ID!): Artist
 }
 
 type Mutation {
-    createArtist(content: ArtistInput): Artist
-    updateArtist(id: ID!, content: ArtistInput): Artist
+    createArtist(content: ArtistInputPost): Artist
+    updateArtist(id: ID!, content: ArtistInputPut): Artist
     deleteArtist(id: ID!): ArtistDelete
 }

@@ -9,9 +9,9 @@ type Track {
 }
 
 type Tracks {
-    offset: Int
-    limit: Int
-    total: Int
+    offset: Int!
+    limit: Int!
+    total: Int!
     items: [Track!]
 }
 
@@ -20,22 +20,31 @@ type TrackDelete {
     deletedCount: Int
 }
 
-input TrackInput {
+input TrackInputPost {
     title: String!
-    albums: [ID]
-    bands: [ID]
+    albums: [ID!]
+    bands: [ID!]
     duration: Int
     released: Int
-    genres: [ID]
+    genres: [ID!]
+}
+
+input TrackInputPut {
+    title: String!
+    albums: [ID!]
+    bands: [ID!]
+    duration: Int
+    released: Int
+    genres: [ID!]
 }
 
 type Query {
-    tracks: Tracks
+    tracks(limit: Int, offset: Int, filter: String): Tracks
     track(id: ID!): Track
 }
 
 type Mutation {
-    createTrack(content: TrackInput): Track
-    updateTrack(id: ID!, content: TrackInput): Track
+    createTrack(content: TrackInputPost): Track
+    updateTrack(id: ID!, content: TrackInputPut): Track
     deleteTrack(id: ID!): TrackDelete
 }

@@ -3,12 +3,12 @@ import {
   IIDDefault, IBandDataPost, IConfig, IBandDataPut, IDataID,
 } from '../../../utils/types';
 import { bandsUrl } from '../../../utils/constants';
-import { transformData } from '../../../utils/common';
+import { transformData, errorHandler } from '../../../utils/common';
 
 export const resolver = {
   Query: {
-    bands: async () => {
-      const { data } = await axios.get(bandsUrl);
+    bands: async (_: any, { limit = 5, offset = 0, filter = '' }) => {
+      const { data } = await axios.get(bandsUrl, { params: { limit, offset, filter } });
       const newData = transformData(data);
       return newData;
     },
@@ -25,7 +25,7 @@ export const resolver = {
         const newData = transformData(data);
         return newData;
       } catch (error: any) {
-        return error;
+        throw errorHandler(error);
       }
     },
     updateBand: async (_: any, { id, ...body }: IBandDataPut, context: IConfig) => {
@@ -33,8 +33,8 @@ export const resolver = {
         const { data } = await axios.put(`${bandsUrl}/${id}`, body.content, context.config);
         const newData = transformData(data);
         return newData;
-      } catch (error) {
-        return error;
+      } catch (error: any) {
+        throw errorHandler(error);
       }
     },
     deleteBand: async (_: any, { id }: IDataID, context: IConfig) => {
@@ -42,8 +42,8 @@ export const resolver = {
         const { data } = await axios.delete(`${bandsUrl}/${id}`, context.config);
         const newData = transformData(data);
         return newData;
-      } catch (error) {
-        return error;
+      } catch (error: any) {
+        throw errorHandler(error);
       }
     },
   },
