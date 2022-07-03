@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { IIDDefault, IConfig } from '../../../utils/types';
 import { favouritesUrl } from '../../../utils/constants';
+import { transformData } from '../../../utils/common';
 
 export const resolver = {
   Query: {
     favourites: async (_: any, __: any, context: IConfig) => {
       const { data } = await axios.get(favouritesUrl, context.config);
-      console.log('data', data);
-      return data;
+      const newData = transformData(data);
+      return newData;
     },
   },
   Mutation: {
@@ -15,8 +16,8 @@ export const resolver = {
       try {
         const body = { id, type: 'tracks' };
         const { data } = await axios.put(`${favouritesUrl}/add`, body, context.config);
-        console.log('data', data);
-        return data;
+        const newData = transformData(data);
+        return newData;
       } catch (error: any) {
         return error;
       }
@@ -25,8 +26,8 @@ export const resolver = {
       try {
         const body = { id, type: 'bands' };
         const { data } = await axios.put(`${favouritesUrl}/add`, body, context.config);
-        console.log('data', data);
-        return data;
+        const newData = transformData(data);
+        return newData;
       } catch (error: any) {
         return error;
       }
@@ -35,8 +36,8 @@ export const resolver = {
       try {
         const body = { id, type: 'artists' };
         const { data } = await axios.put(`${favouritesUrl}/add`, body, context.config);
-        console.log('data', data);
-        return data;
+        const newData = transformData(data);
+        return newData;
       } catch (error: any) {
         return error;
       }
@@ -45,8 +46,8 @@ export const resolver = {
       try {
         const body = { id, type: 'genres' };
         const { data } = await axios.put(`${favouritesUrl}/add`, body, context.config);
-        console.log('data', data);
-        return data;
+        const newData = transformData(data);
+        return newData;
       } catch (error: any) {
         return error;
       }

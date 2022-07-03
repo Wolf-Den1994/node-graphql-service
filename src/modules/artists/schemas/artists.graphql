@@ -1,5 +1,5 @@
 type Artist {
-    _id: ID!
+    id: ID!
     firstName: String
     secondName: String
     middleName: String
@@ -29,13 +29,13 @@ input ArtistInput {
     birthDate: String
     birthPlace: String
     country: String!
-    bandsIds: [String]
+    bands: [ID]
     instruments: [String]
 }
 
 type Query {
     artists: Artists
-    artist(_id: ID!): Artist
+    artist(id: ID!): Artist
 }
 
 type Mutation {

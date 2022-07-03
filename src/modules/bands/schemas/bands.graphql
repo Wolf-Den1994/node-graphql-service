@@ -1,5 +1,5 @@
 type Band {
-    _id: ID!
+    id: ID!
     name: String
     origin: String
     members: [Member]
@@ -41,7 +41,7 @@ input MemberInpit {
 
 type Query {
     bands: Bands
-    band(_id: ID!): Band
+    band(id: ID!): Band
 }
 
 type Mutation {

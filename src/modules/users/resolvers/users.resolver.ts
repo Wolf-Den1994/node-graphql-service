@@ -1,17 +1,20 @@
 import axios from 'axios';
-import { IID, INewUser, IUserLogin } from '../../../utils/types';
+import { IIDDefault, INewUser, IUserLogin } from '../../../utils/types';
 import { usersUrl } from '../../../utils/constants';
+import { transformData } from '../../../utils/common';
 
 export const resolver = {
   Query: {
-    user: async (_: any, { _id }: IID) => {
-      const { data } = await axios.get(`${usersUrl}/${_id}`);
-      return data;
+    user: async (_: any, { id }: IIDDefault) => {
+      const { data } = await axios.get(`${usersUrl}/${id}`);
+      const newData = transformData(data);
+      return newData;
     },
     jwt: async (_: any, body: IUserLogin) => {
       try {
         const { data } = await axios.post(`${usersUrl}/login`, body);
-        return data;
+        const newData = transformData(data);
+        return newData;
       } catch (error) {
         return error;
       }
@@ -21,7 +24,8 @@ export const resolver = {
     register: async (_: any, { content }: INewUser) => {
       try {
         const { data } = await axios.post(`${usersUrl}/register`, content);
-        return data;
+        const newData = transformData(data);
+        return newData;
       } catch (error: any) {
         return error;
       }

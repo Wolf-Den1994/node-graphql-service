@@ -1,5 +1,5 @@
 type Genre {
-    _id: ID!
+    id: ID!
     name: String
     description: String
     country: String
@@ -27,7 +27,7 @@ input GenreInput {
 
 type Query {
     genres: Genres
-    genre(_id: ID!): Genre
+    genre(id: ID!): Genre
 }
 
 type Mutation {

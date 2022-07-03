@@ -1,5 +1,5 @@
 type Album {
-    _id: ID!
+    id: ID!
     name: String
     released: Int
     artists: [Artist]
@@ -33,7 +33,7 @@ input AlbumInput {
 
 type Query {
     albums: Albums
-    album(_id: ID!): Album
+    album(id: ID!): Album
 }
 
 type Mutation {
