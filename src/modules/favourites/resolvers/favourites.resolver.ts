@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { IIDDefault, IConfig } from '../../../utils/types';
 import { favouritesUrl } from '../../../utils/constants';
-import { transformData, errorHandler } from '../../../utils/common';
+import { transformResponseData, errorHandler } from '../../../utils/common';
 
 export const resolver = {
   Query: {
     favourites: async (_: any, __: any, context: IConfig) => {
       const { data } = await axios.get(favouritesUrl, context.config);
-      const newData = transformData(data);
+      const newData = transformResponseData(data);
       return newData;
     },
   },
@@ -16,7 +16,7 @@ export const resolver = {
       try {
         const body = { id, type: 'tracks' };
         const { data } = await axios.put(`${favouritesUrl}/add`, body, context.config);
-        const newData = transformData(data);
+        const newData = transformResponseData(data);
         return newData;
       } catch (error: any) {
         throw errorHandler(error);
@@ -26,7 +26,7 @@ export const resolver = {
       try {
         const body = { id, type: 'bands' };
         const { data } = await axios.put(`${favouritesUrl}/add`, body, context.config);
-        const newData = transformData(data);
+        const newData = transformResponseData(data);
         return newData;
       } catch (error: any) {
         throw errorHandler(error);
@@ -36,7 +36,7 @@ export const resolver = {
       try {
         const body = { id, type: 'artists' };
         const { data } = await axios.put(`${favouritesUrl}/add`, body, context.config);
-        const newData = transformData(data);
+        const newData = transformResponseData(data);
         return newData;
       } catch (error: any) {
         throw errorHandler(error);
@@ -46,7 +46,7 @@ export const resolver = {
       try {
         const body = { id, type: 'genres' };
         const { data } = await axios.put(`${favouritesUrl}/add`, body, context.config);
-        const newData = transformData(data);
+        const newData = transformResponseData(data);
         return newData;
       } catch (error: any) {
         throw errorHandler(error);

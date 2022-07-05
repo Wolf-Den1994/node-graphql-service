@@ -1,4 +1,6 @@
-export const transformData = (oldData: any) => {
+import axios from 'axios';
+
+export const transformResponseData = (oldData: any) => {
   const data = oldData;
 
   if (Object.prototype.hasOwnProperty.call(data, '_id')) data.id = data._id;
@@ -13,6 +15,27 @@ export const transformData = (oldData: any) => {
   }
 
   return data;
+};
+
+export const transformRequestData = (oldData: any) => {
+  const data = oldData;
+
+  if (Object.prototype.hasOwnProperty.call(data, 'bands')) data.bandsIds = data.bands;
+  if (Object.prototype.hasOwnProperty.call(data, 'tracks')) data.tracksIds = data.tracks;
+  if (Object.prototype.hasOwnProperty.call(data, 'genres')) data.genresIds = data.genres;
+  if (Object.prototype.hasOwnProperty.call(data, 'artists')) data.artistsIds = data.artists;
+
+  return data;
+};
+
+export const moreRequestsById = async (ids: any, url: string) => {
+  const responses = await Promise.all(
+    ids.map((id: string) => axios.get(`${url}/${id}`)),
+  );
+
+  return responses
+    .filter((res) => res.status === 200)
+    .map((res) => transformResponseData(res.data));
 };
 
 export const errorHandler = (error: any) => {

@@ -34,7 +34,7 @@ input BandInputPost {
 }
 
 input BandInputPut {
-    name: String!
+    name: String
     origin: String
     website: String
     members: [MemberInpit!]

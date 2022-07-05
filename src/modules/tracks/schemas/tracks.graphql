@@ -30,7 +30,7 @@ input TrackInputPost {
 }
 
 input TrackInputPut {
-    title: String!
+    title: String
     albums: [ID!]
     bands: [ID!]
     duration: Int

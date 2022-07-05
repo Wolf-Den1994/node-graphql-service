@@ -3,18 +3,18 @@ import {
   IIDDefault, IGenreDataPost, IConfig, IGenreDataPut, IDataID,
 } from '../../../utils/types';
 import { genresUrl } from '../../../utils/constants';
-import { transformData, errorHandler } from '../../../utils/common';
+import { transformResponseData, errorHandler } from '../../../utils/common';
 
 export const resolver = {
   Query: {
     genres: async (_: any, { limit = 5, offset = 0, filter = '' }) => {
       const { data } = await axios.get(genresUrl, { params: { limit, offset, filter } });
-      const newData = transformData(data);
+      const newData = transformResponseData(data);
       return newData;
     },
     genre: async (_: any, { id }: IIDDefault) => {
       const { data } = await axios.get(`${genresUrl}/${id}`);
-      const newData = transformData(data);
+      const newData = transformResponseData(data);
       return newData;
     },
   },
@@ -22,7 +22,7 @@ export const resolver = {
     createGenre: async (_: any, { content }: IGenreDataPost, context: IConfig) => {
       try {
         const { data } = await axios.post(genresUrl, content, context.config);
-        const newData = transformData(data);
+        const newData = transformResponseData(data);
         return newData;
       } catch (error: any) {
         throw errorHandler(error);
@@ -31,7 +31,7 @@ export const resolver = {
     updateGenre: async (_: any, { id, ...body }: IGenreDataPut, context: IConfig) => {
       try {
         const { data } = await axios.put(`${genresUrl}/${id}`, body.content, context.config);
-        const newData = transformData(data);
+        const newData = transformResponseData(data);
         return newData;
       } catch (error) {
         throw errorHandler(error);
@@ -40,7 +40,7 @@ export const resolver = {
     deleteGenre: async (_: any, { id }: IDataID, context: IConfig) => {
       try {
         const { data } = await axios.delete(`${genresUrl}/${id}`, context.config);
-        const newData = transformData(data);
+        const newData = transformResponseData(data);
         return newData;
       } catch (error) {
         throw errorHandler(error);
