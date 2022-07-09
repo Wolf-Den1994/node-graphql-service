@@ -16,5 +16,9 @@ type Mutation {
     addBandToFavourites(id: ID!): Favourites
     addArtistToFavourites(id: ID!): Favourites
     addGenreToFavourites(id: ID!): Favourites
+    removeTrackToFavourites(id: ID!): Favourites
+    removeBandToFavourites(id: ID!): Favourites
+    removeArtistToFavourites(id: ID!): Favourites
+    removeGenreToFavourites(id: ID!): Favourites
 }
 

@@ -36,7 +36,6 @@ export const resolver = {
       return result.artists;
     },
     tracks: async (parent: any) => {
-      console.log('ppp,', parent);
       const result = { ...parent };
       if (parent.tracksIds) {
         result.tracks = await moreRequestsById(parent.tracksIds, tracksUrl);
@@ -82,6 +81,46 @@ export const resolver = {
         const newData = transformResponseData(data);
         return newData;
       } catch (error: any) {
+        throw errorHandler(error);
+      }
+    },
+    removeTrackToFavourites: async (_: any, { id }: IIDDefault, context: IConfig) => {
+      try {
+        const body = { id, type: 'tracks' };
+        const { data } = await axios.put(`${favouritesUrl}/remove`, body, context.config);
+        const newData = transformResponseData(data);
+        return newData;
+      } catch (error) {
+        throw errorHandler(error);
+      }
+    },
+    removeBandToFavourites: async (_: any, { id }: IIDDefault, context: IConfig) => {
+      try {
+        const body = { id, type: 'bands' };
+        const { data } = await axios.put(`${favouritesUrl}/remove`, body, context.config);
+        const newData = transformResponseData(data);
+        return newData;
+      } catch (error) {
+        throw errorHandler(error);
+      }
+    },
+    removeArtistToFavourites: async (_: any, { id }: IIDDefault, context: IConfig) => {
+      try {
+        const body = { id, type: 'artists' };
+        const { data } = await axios.put(`${favouritesUrl}/remove`, body, context.config);
+        const newData = transformResponseData(data);
+        return newData;
+      } catch (error) {
+        throw errorHandler(error);
+      }
+    },
+    removeGenreToFavourites: async (_: any, { id }: IIDDefault, context: IConfig) => {
+      try {
+        const body = { id, type: 'genres' };
+        const { data } = await axios.put(`${favouritesUrl}/remove`, body, context.config);
+        const newData = transformResponseData(data);
+        return newData;
+      } catch (error) {
         throw errorHandler(error);
       }
     },

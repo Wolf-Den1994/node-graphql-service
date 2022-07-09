@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
   IIDDefault, IBandDataPost, IConfig, IBandDataPut, IDataID,
 } from '../../../utils/types';
-import { bandsUrl, genresUrl } from '../../../utils/constants';
+import { artistsUrl, bandsUrl, genresUrl } from '../../../utils/constants';
 import {
   moreRequestsById, transformRequestData, transformResponseData, errorHandler,
 } from '../../../utils/common';
@@ -23,10 +23,30 @@ export const resolver = {
   Band: {
     genres: async (parent: any) => {
       const result = { ...parent };
-      if (parent.bandsIds) {
+      if (parent.genresIds) {
         result.bands = await moreRequestsById(parent.genresIds, genresUrl);
       }
       return result.bands;
+    },
+    members: async (parent: any) => {
+      const result = { ...parent };
+      if (parent.members) {
+        const ids = parent.members.map(({ artist }: any) => artist);
+        result.members = await moreRequestsById(ids, artistsUrl);
+        const artistsResult = result.members.map((member: any) => {
+          const artistFind = parent.members.find(({ artist }: any) => artist === member.id);
+          if (artistFind) {
+            return {
+              artist: member.id,
+              ...member,
+              ...artistFind,
+            };
+          }
+          return member;
+        });
+        return artistsResult;
+      }
+      return result.members;
     },
   },
   Mutation: {
