@@ -1,7 +1,8 @@
 type Track {
     id: ID!
     title: String!
-    albums: [Album]
+    album: Album
+    artists: [Artist]
     bands: [Band]
     duration: Int
     released: Int
@@ -22,7 +23,8 @@ type TrackDelete {
 
 input TrackInputPost {
     title: String!
-    albums: [ID!]
+    album: ID
+    artists: [ID!]
     bands: [ID!]
     duration: Int
     released: Int
@@ -31,7 +33,8 @@ input TrackInputPost {
 
 input TrackInputPut {
     title: String
-    albums: [ID!]
+    album: ID
+    artists: [ID!]
     bands: [ID!]
     duration: Int
     released: Int

@@ -24,7 +24,7 @@ export const resolver = {
     bands: async (parent: any) => {
       const result = { ...parent };
       if (parent.bandsIds) {
-        result.bands = moreRequestsById(parent.bandsIds, bandsUrl);
+        result.bands = await moreRequestsById(parent.bandsIds, bandsUrl);
       }
       return result.bands;
     },
@@ -33,8 +33,8 @@ export const resolver = {
     createArtist: async (_: any, { content }: IArtistDataPost, context: IConfig) => {
       try {
         const dataReq = transformRequestData(content);
-        const res = await axios.post(artistsUrl, dataReq, context.config);
-        const dataRes = transformResponseData(res.data);
+        const { data } = await axios.post(artistsUrl, dataReq, context.config);
+        const dataRes = transformResponseData(data);
         return dataRes;
       } catch (error: any) {
         throw errorHandler(error);

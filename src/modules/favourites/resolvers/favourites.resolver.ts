@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { IIDDefault, IConfig } from '../../../utils/types';
-import { favouritesUrl } from '../../../utils/constants';
-import { transformResponseData, errorHandler } from '../../../utils/common';
+import {
+  favouritesUrl, bandsUrl, genresUrl, artistsUrl, tracksUrl,
+} from '../../../utils/constants';
+import { transformResponseData, errorHandler, moreRequestsById } from '../../../utils/common';
 
 export const resolver = {
   Query: {
@@ -9,6 +11,37 @@ export const resolver = {
       const { data } = await axios.get(favouritesUrl, context.config);
       const newData = transformResponseData(data);
       return newData;
+    },
+  },
+  Favourites: {
+    bands: async (parent: any) => {
+      const result = { ...parent };
+      if (parent.bandsIds) {
+        result.bands = await moreRequestsById(parent.bandsIds, bandsUrl);
+      }
+      return result.bands;
+    },
+    genres: async (parent: any) => {
+      const result = { ...parent };
+      if (parent.genresIds) {
+        result.genres = await moreRequestsById(parent.genresIds, genresUrl);
+      }
+      return result.genres;
+    },
+    artists: async (parent: any) => {
+      const result = { ...parent };
+      if (parent.artistsIds) {
+        result.artists = await moreRequestsById(parent.artistsIds, artistsUrl);
+      }
+      return result.artists;
+    },
+    tracks: async (parent: any) => {
+      console.log('ppp,', parent);
+      const result = { ...parent };
+      if (parent.tracksIds) {
+        result.tracks = await moreRequestsById(parent.tracksIds, tracksUrl);
+      }
+      return result.tracks;
     },
   },
   Mutation: {

@@ -24,7 +24,7 @@ export const resolver = {
     genres: async (parent: any) => {
       const result = { ...parent };
       if (parent.bandsIds) {
-        result.bands = moreRequestsById(parent.genresIds, genresUrl);
+        result.bands = await moreRequestsById(parent.genresIds, genresUrl);
       }
       return result.bands;
     },
