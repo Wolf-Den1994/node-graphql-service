@@ -1,34 +1,33 @@
 import axios from 'axios';
-import {
-  IIDDefault, IGenreDataPost, IConfig, IGenreDataPut, IDataID,
-} from '../../../utils/types';
+import { IID, IConfig } from '../../../utils/types';
+import { IGenreDataPost, IGenreDataPut } from '../models/genres.model';
 import { genresUrl } from '../../../utils/constants';
 import { transformResponseData, errorHandler } from '../../../utils/common';
 
 export const resolver = {
   Query: {
-    genres: async (_: any, { limit = 5, offset = 0, filter = '' }) => {
+    genres: async (_, { limit = 5, offset = 0, filter = '' }) => {
       const { data } = await axios.get(genresUrl, { params: { limit, offset, filter } });
       const newData = transformResponseData(data);
       return newData;
     },
-    genre: async (_: any, { id }: IIDDefault) => {
+    genre: async (_, { id }: IID) => {
       const { data } = await axios.get(`${genresUrl}/${id}`);
       const newData = transformResponseData(data);
       return newData;
     },
   },
   Mutation: {
-    createGenre: async (_: any, { content }: IGenreDataPost, context: IConfig) => {
+    createGenre: async (_, { content }: IGenreDataPost, context: IConfig) => {
       try {
         const { data } = await axios.post(genresUrl, content, context.config);
         const newData = transformResponseData(data);
         return newData;
-      } catch (error: any) {
+      } catch (error) {
         throw errorHandler(error);
       }
     },
-    updateGenre: async (_: any, { id, ...body }: IGenreDataPut, context: IConfig) => {
+    updateGenre: async (_, { id, ...body }: IGenreDataPut, context: IConfig) => {
       try {
         const { data } = await axios.put(`${genresUrl}/${id}`, body.content, context.config);
         const newData = transformResponseData(data);
@@ -37,7 +36,7 @@ export const resolver = {
         throw errorHandler(error);
       }
     },
-    deleteGenre: async (_: any, { id }: IDataID, context: IConfig) => {
+    deleteGenre: async (_, { id }: IID, context: IConfig) => {
       try {
         const { data } = await axios.delete(`${genresUrl}/${id}`, context.config);
         const newData = transformResponseData(data);

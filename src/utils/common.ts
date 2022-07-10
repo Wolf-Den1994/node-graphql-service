@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const transformResponseData = (oldData: any) => {
+export const transformResponseData = (oldData) => {
   const data = oldData;
 
   if (Object.prototype.hasOwnProperty.call(data, '_id')) data.id = data._id;
@@ -18,7 +18,7 @@ export const transformResponseData = (oldData: any) => {
   return data;
 };
 
-export const transformRequestData = (oldData: any) => {
+export const transformRequestData = (oldData) => {
   const data = oldData;
 
   if (Object.prototype.hasOwnProperty.call(data, 'bands')) data.bandsIds = data.bands;
@@ -30,7 +30,7 @@ export const transformRequestData = (oldData: any) => {
   return data;
 };
 
-export const moreRequestsById = async (ids: any, url: string) => {
+export const moreRequestsById = async (ids, url: string) => {
   const responses = await Promise.all(
     ids.map((id: string) => axios.get(`${url}/${id}`)),
   );
@@ -40,12 +40,12 @@ export const moreRequestsById = async (ids: any, url: string) => {
     .map((res) => transformResponseData(res.data));
 };
 
-export const requestsById = async (id: any, url: string) => {
+export const requestsById = async (id, url: string) => {
   const { data } = await axios.get(`${url}/${id}`);
   return transformResponseData(data);
 };
 
-export const errorHandler = (error: any) => {
+export const errorHandler = (error) => {
   const { response: { data } } = error;
   if (data) {
     const { message } = data;

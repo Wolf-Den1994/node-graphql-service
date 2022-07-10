@@ -1,7 +1,6 @@
 import axios from 'axios';
-import {
-  IIDDefault, IArtistDataPost, IConfig, IArtistDataPut, IDataID,
-} from '../../../utils/types';
+import { IID, IConfig } from '../../../utils/types';
+import { IArtistDataPut, IArtistDataPost } from '../models/artists.model';
 import { artistsUrl, bandsUrl } from '../../../utils/constants';
 import {
   transformRequestData, transformResponseData, errorHandler, moreRequestsById,
@@ -9,19 +8,19 @@ import {
 
 export const resolver = {
   Query: {
-    artists: async (_: any, { limit = 5, offset = 0, filter = '' }) => {
+    artists: async (_, { limit = 5, offset = 0, filter = '' }) => {
       const { data } = await axios.get(artistsUrl, { params: { limit, offset, filter } });
       const newData = transformResponseData(data);
       return newData;
     },
-    artist: async (_: any, { id }: IIDDefault) => {
+    artist: async (_, { id }: IID) => {
       const { data } = await axios.get(`${artistsUrl}/${id}`);
       const newData = transformResponseData(data);
       return newData;
     },
   },
   Artist: {
-    bands: async (parent: any) => {
+    bands: async (parent) => {
       const result = { ...parent };
       if (parent.bandsIds) {
         result.bands = await moreRequestsById(parent.bandsIds, bandsUrl);
@@ -30,32 +29,32 @@ export const resolver = {
     },
   },
   Mutation: {
-    createArtist: async (_: any, { content }: IArtistDataPost, context: IConfig) => {
+    createArtist: async (_, { content }: IArtistDataPost, context: IConfig) => {
       try {
         const dataReq = transformRequestData(content);
         const { data } = await axios.post(artistsUrl, dataReq, context.config);
         const dataRes = transformResponseData(data);
         return dataRes;
-      } catch (error: any) {
+      } catch (error) {
         throw errorHandler(error);
       }
     },
-    updateArtist: async (_: any, { id, ...body }: IArtistDataPut, context: IConfig) => {
+    updateArtist: async (_, { id, ...body }: IArtistDataPut, context: IConfig) => {
       try {
         const dataReq = transformRequestData(body.content);
         const { data } = await axios.put(`${artistsUrl}/${id}`, dataReq, context.config);
         const dataRes = transformResponseData(data);
         return dataRes;
-      } catch (error: any) {
+      } catch (error) {
         throw errorHandler(error);
       }
     },
-    deleteArtist: async (_: any, { id }: IDataID, context: IConfig) => {
+    deleteArtist: async (_, { id }: IID, context: IConfig) => {
       try {
         const { data } = await axios.delete(`${artistsUrl}/${id}`, context.config);
         const newData = transformResponseData(data);
         return newData;
-      } catch (error: any) {
+      } catch (error) {
         throw errorHandler(error);
       }
     },
