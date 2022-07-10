@@ -5,7 +5,9 @@
   "main": "src/index.ts",
   "scripts": {
     "start:dev": "nodemon",
-    "start:prod": "tsc && node ./dist/index.js"
+    "start:prod": "tsc && node ./dist/index.js",
+    "lint": "eslint \"src/**/*.{ts,js}\"",
+    "lintfix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
