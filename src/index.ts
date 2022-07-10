@@ -3,6 +3,8 @@ import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 import 'dotenv/config';
 
+const PORT = process.env.PORT || 4000;
+
 const types = loadFilesSync('./**/**/*.graphql');
 const typeDefs = mergeTypeDefs(types);
 
@@ -23,6 +25,6 @@ const server = new ApolloServer({
   }),
 });
 
-server.listen().then(({ url }) => {
+server.listen(PORT).then(({ url }) => {
   console.log(`Server has been started on the ${url}`);
 });
