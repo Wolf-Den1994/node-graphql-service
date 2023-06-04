@@ -1,0 +1,56 @@
+type Artist {
+    id: ID!
+    firstName: String
+    secondName: String
+    middleName: String
+    birthDate: String
+    birthPlace: String
+    country: String
+    bands: [Band]
+    instruments: [String]
+}
+
+type Artists {
+    offset: Int!
+    limit: Int!
+    total: Int!
+    items: [Artist!]
+}
+
+type ArtistDelete {
+    acknowledged: Boolean
+    deletedCount: Int
+}
+
+input ArtistInputPost {
+    firstName: String!
+    secondName: String!
+    middleName: String
+    birthDate: String
+    birthPlace: String
+    country: String!
+    bands: [ID!]
+    instruments: [String]
+}
+
+input ArtistInputPut {
+    firstName: String
+    secondName: String
+    middleName: String
+    birthDate: String
+    birthPlace: String
+    country: String
+    bands: [ID!]
+    instruments: [String]
+}
+
+type Query {
+    artists(limit: Int, offset: Int, filter: String): Artists
+    artist(id: ID!): Artist
+}
+
+type Mutation {
+    createArtist(content: ArtistInputPost): Artist
+    updateArtist(id: ID!, content: ArtistInputPut): Artist
+    deleteArtist(id: ID!): ArtistDelete
+}
